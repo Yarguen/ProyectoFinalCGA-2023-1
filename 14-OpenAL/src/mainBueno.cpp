@@ -146,13 +146,20 @@ GL_TEXTURE_CUBE_MAP_POSITIVE_Y,
 GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
 GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
 GL_TEXTURE_CUBE_MAP_NEGATIVE_Z };
-
-std::string fileNames[6] = { "../Textures/mp_bloodvalley/blood-valley_ft.tga",
-		"../Textures/mp_bloodvalley/blood-valley_bk.tga",
-		"../Textures/mp_bloodvalley/blood-valley_up.tga",
-		"../Textures/mp_bloodvalley/blood-valley_dn.tga",
-		"../Textures/mp_bloodvalley/blood-valley_rt.tga",
-		"../Textures/mp_bloodvalley/blood-valley_lf.tga" };
+//
+//std::string fileNames[6] = { "../Textures/mp_bloodvalley/blood-valley_ft.tga",
+//		"../Textures/mp_bloodvalley/blood-valley_bk.tga",
+//		"../Textures/mp_bloodvalley/blood-valley_up.tga",
+//		"../Textures/mp_bloodvalley/blood-valley_dn.tga",
+//		"../Textures/mp_bloodvalley/blood-valley_rt.tga",
+//		"../Textures/mp_bloodvalley/blood-valley_lf.tga" };
+// 
+std::string fileNames[6] = { "../Textures/skybox_islas/front.png",
+		"../Textures/skybox_islas/back.png",
+		"../Textures/skybox_islas/top.png",
+		"../Textures/skybox_islas/bottom.png",
+		"../Textures/skybox_islas/right.png",
+		"../Textures/skybox_islas/left.png" };
 
 bool exitApp = false;
 int lastMousePosX, offsetX = 0;
