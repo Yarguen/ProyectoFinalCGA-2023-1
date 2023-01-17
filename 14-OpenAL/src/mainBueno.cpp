@@ -124,9 +124,13 @@ Model modelLampPost2;
 Model modelGrass;
 // Fountain
 Model modelFountain;
+
+Model modelIsla;
+
 // Model animate instance
 // Mayow
 Model mayowModelAnimate;
+Model Finn;
 // Terrain model instance
 Terrain terrain(-1, -1, 200, 16, "../Textures/heightmap.png");
 
@@ -173,6 +177,8 @@ glm::mat4 modelMatrixAircraft = glm::mat4(1.0);
 glm::mat4 modelMatrixDart = glm::mat4(1.0f);
 glm::mat4 modelMatrixMayow = glm::mat4(1.0f);
 glm::mat4 modelMatrixFountain = glm::mat4(1.0f);
+glm::mat4 modelMatrixFinn = glm::mat4(1.0f);
+glm::mat4 modelMatrixIsla = glm::mat4(1.0f);
 
 int animationIndex = 1;
 float rotDartHead = 0.0, rotDartLeftArm = 0.0, rotDartLeftHand = 0.0, rotDartRightArm = 0.0, rotDartRightHand = 0.0, rotDartLeftLeg = 0.0, rotDartRightLeg = 0.0;
@@ -611,9 +617,17 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	modelFountain.loadModel("../models/fountain/fountain.obj");
 	modelFountain.setShader(&shaderMulLighting);
 
+	//Isla
+	modelIsla.loadModel("../models/plataforma2/islaPrueba2.obj");
+	modelIsla.setShader(&shaderMulLighting);
+
 	//Mayow
 	mayowModelAnimate.loadModel("../models/mayow/personaje2.fbx");
 	mayowModelAnimate.setShader(&shaderMulLighting);
+
+	//Finn
+	Finn.loadModel("../models/Finn/Finn.obj");
+	Finn.setShader(&shaderMulLighting);
 
 	camera->setPosition(glm::vec3(0.0, 0.0, 10.0));
 	camera->setDistanceFromTarget(distanceFromTarget);
@@ -1192,9 +1206,11 @@ void destroy() {
 	modelLampPost2.destroy();
 	modelGrass.destroy();
 	modelFountain.destroy();
+	modelIsla.destroy();
 
 	// Custom objects animate
 	mayowModelAnimate.destroy();
+	Finn.destroy();
 
 	// Textures Delete
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -1709,11 +1725,13 @@ void applicationLoop() {
 		glViewport(0, 0, screenWidth, screenHeight);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		shaderTextura.setMatrix4("view", 1, false, glm::value_ptr(glm::mat4(1.0)));
+		//Interfaz del juego
+
+		/*shaderTextura.setMatrix4("view", 1, false, glm::value_ptr(glm::mat4(1.0)));
 		shaderTextura.setMatrix4("projection", 1, false, glm::value_ptr(glm::mat4(1.0)));
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, textureWindowID);
-		boxIntro.render();
+		boxIntro.render();*/
 
 		prepareScene();
 		glActiveTexture(GL_TEXTURE10);
@@ -1847,7 +1865,7 @@ void applicationLoop() {
 		/*******************************************
 		 * Render de colliders
 		 *******************************************/
-		for (std::map<std::string, std::tuple<AbstractModel::OBB, glm::mat4, glm::mat4> >::iterator it =
+		/*for (std::map<std::string, std::tuple<AbstractModel::OBB, glm::mat4, glm::mat4> >::iterator it =
 				collidersOBB.begin(); it != collidersOBB.end(); it++) {
 			glm::mat4 matrixCollider = glm::mat4(1.0);
 			matrixCollider = glm::translate(matrixCollider, std::get<0>(it->second).c);
@@ -1866,7 +1884,7 @@ void applicationLoop() {
 			sphereCollider.setColor(glm::vec4(1.0, 1.0, 1.0, 1.0));
 			sphereCollider.enableWireMode();
 			sphereCollider.render(matrixCollider);
-		}
+		}*/
 
 		// Esto es para ilustrar la transformacion inversa de los coliders
 		/*glm::vec3 cinv = glm::inverse(mayowCollider.u) * glm::vec4(rockCollider.c, 1.0);
@@ -2343,6 +2361,21 @@ void renderScene(bool renderParticles){
 	mayowModelAnimate.setAnimationIndex(animationIndex);
 	mayowModelAnimate.render(modelMatrixMayowBody);
 
+	//Render Finn
+	modelMatrixFinn[3][1] = -GRAVITY * tmv * tmv + 3.5 * tmv + terrain.getHeightTerrain(modelMatrixFinn[3][0], modelMatrixFinn[3][2]);
+	tmv = currTime - startTimeJump;
+	if (modelMatrixFinn[3][1] < terrain.getHeightTerrain(modelMatrixFinn[3][0], modelMatrixFinn[3][2])) {
+		isJump = false;
+		modelMatrixFinn[3][1] = terrain.getHeightTerrain(modelMatrixFinn[3][0], modelMatrixFinn[3][2]);
+	}
+	glm::mat4 modelMatrixFinnBody = glm::mat4(modelMatrixFinn);
+	modelMatrixFinnBody = glm::scale(modelMatrixFinnBody, glm::vec3(0.2f));
+	Finn.render(modelMatrixFinnBody);
+	
+	//Isla
+	glm::mat4 modelMatrixIsla2 = glm::mat4(modelMatrixIsla);
+	modelMatrixIsla2 = glm::scale(modelMatrixIsla2, glm::vec3(0.5f));
+	modelIsla.render(modelMatrixIsla2);
 	/**********
 	 * Update the position with alpha objects
 	 */
