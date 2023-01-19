@@ -262,6 +262,12 @@ std::map<std::string, std::tuple<AbstractModel::SBB, glm::mat4, glm::mat4> > col
 // Framesbuffers
 GLuint depthMap, depthMapFBO;
 
+//Variables para cambio de iluminacion ambiental
+
+glm::vec3 luzAmbiental = glm::vec3(0.5f, 0.5f, 0.5f);
+bool cambioAmbiental = true;
+
+
 /**********************
  * OpenAL config
  */
@@ -1264,6 +1270,31 @@ void keyCallback(GLFWwindow *window, int key, int scancode, int action,
 			break;
 		}
 	}
+	if (glfwGetKey(window, GLFW_KEY_M)==GLFW_PRESS) {
+		if (cambioAmbiental)
+		{
+			//Light1 = glm::vec3(0);
+			//Light2 = glm::vec3(0);
+			//Light3 = glm::vec3(0);
+			//Light4 = glm::vec3(0);
+			luzAmbiental = glm::vec3(0.5f, 0.5f, 0.5f);
+			cambioAmbiental = false;
+		}
+		else
+		{
+			//Light1 = glm::vec3(1.0f, 1.0f, 1.0f);
+			//Light2 = glm::vec3(1.0f, 1.0f, 1.0f);
+			//Light3 = glm::vec3(1.0f, 1.0f, 1.0f);
+			//Light4 = glm::vec3(1.0f, 1.0f, 1.0f);
+			luzAmbiental = glm::vec3(0.1f, 0.1f, 0.1f);
+			cambioAmbiental = true;
+		}
+	}
+
+
+
+
+
 }
 
 void mouseCallback(GLFWwindow *window, double xpos, double ypos) {
@@ -1586,8 +1617,11 @@ void applicationLoop() {
 		 * Propiedades Luz direccional
 		 *******************************************/
 		shaderMulLighting.setVectorFloat3("viewPos", glm::value_ptr(camera->getPosition()));
-		shaderMulLighting.setVectorFloat3("directionalLight.light.ambient", glm::value_ptr(glm::vec3(0.2, 0.2, 0.2)));
-		shaderMulLighting.setVectorFloat3("directionalLight.light.diffuse", glm::value_ptr(glm::vec3(0.5, 0.5, 0.5)));
+		//shaderMulLighting.setVectorFloat3("directionalLight.light.ambient", glm::value_ptr(glm::vec3(0.2, 0.2, 0.2)));
+		//shaderMulLighting.setVectorFloat3("directionalLight.light.diffuse", glm::value_ptr(glm::vec3(0.5, 0.5, 0.5)));
+		shaderMulLighting.setVectorFloat3("directionalLight.light.ambient", glm::value_ptr(luzAmbiental));
+		shaderMulLighting.setVectorFloat3("directionalLight.light.diffuse", glm::value_ptr(luzAmbiental));
+
 		shaderMulLighting.setVectorFloat3("directionalLight.light.specular", glm::value_ptr(glm::vec3(0.2, 0.2, 0.2)));
 		shaderMulLighting.setVectorFloat3("directionalLight.direction", glm::value_ptr(glm::vec3(-0.707106781, -0.707106781, 0.0)));
 
@@ -1595,8 +1629,10 @@ void applicationLoop() {
 		 * Propiedades Luz direccional Terrain
 		 *******************************************/
 		shaderTerrain.setVectorFloat3("viewPos", glm::value_ptr(camera->getPosition()));
-		shaderTerrain.setVectorFloat3("directionalLight.light.ambient", glm::value_ptr(glm::vec3(0.2, 0.2, 0.2)));
-		shaderTerrain.setVectorFloat3("directionalLight.light.diffuse", glm::value_ptr(glm::vec3(0.5, 0.5, 0.5)));
+		//shaderTerrain.setVectorFloat3("directionalLight.light.ambient", glm::value_ptr(glm::vec3(0.2, 0.2, 0.2)));
+		//shaderTerrain.setVectorFloat3("directionalLight.light.diffuse", glm::value_ptr(glm::vec3(0.5, 0.5, 0.5)));
+		shaderTerrain.setVectorFloat3("directionalLight.light.ambient", glm::value_ptr(luzAmbiental));
+		shaderTerrain.setVectorFloat3("directionalLight.light.diffuse", glm::value_ptr(luzAmbiental));
 		shaderTerrain.setVectorFloat3("directionalLight.light.specular", glm::value_ptr(glm::vec3(0.2, 0.2, 0.2)));
 		shaderTerrain.setVectorFloat3("directionalLight.direction", glm::value_ptr(glm::vec3(-0.707106781, -0.707106781, 0.0)));
 
