@@ -129,8 +129,8 @@ Model modelIsla;
 
 // Model animate instance
 // Mayow
-Model mayowModelAnimate;
-Model Finn;
+//Model mayowModelAnimate;
+Model finnModelAnimate; // -------------------------> Se crea el objeto Model de Finn
 // Terrain model instance
 Terrain terrain(-1, -1, 200, 16, "../Textures/heightmap.png");
 
@@ -175,9 +175,9 @@ glm::mat4 modelMatrixHeli = glm::mat4(1.0f);
 glm::mat4 modelMatrixLambo = glm::mat4(1.0);
 glm::mat4 modelMatrixAircraft = glm::mat4(1.0);
 glm::mat4 modelMatrixDart = glm::mat4(1.0f);
-glm::mat4 modelMatrixMayow = glm::mat4(1.0f);
+//glm::mat4 modelMatrixMayow = glm::mat4(1.0f);
 glm::mat4 modelMatrixFountain = glm::mat4(1.0f);
-glm::mat4 modelMatrixFinn = glm::mat4(1.0f);
+glm::mat4 modelMatrixFinn = glm::mat4(1.0f); // ------------------------------> Matrix para Finn
 glm::mat4 modelMatrixIsla = glm::mat4(1.0f);
 
 int animationIndex = 1;
@@ -628,12 +628,12 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	modelIsla.setShader(&shaderMulLighting);
 
 	//Mayow
-	mayowModelAnimate.loadModel("../models/mayow/personaje2.fbx");
-	mayowModelAnimate.setShader(&shaderMulLighting);
+	//mayowModelAnimate.loadModel("../models/mayow/personaje2.fbx");
+	//mayowModelAnimate.setShader(&shaderMulLighting);
 
 	//Finn
-	Finn.loadModel("../models/Finn/Finn.obj");
-	Finn.setShader(&shaderMulLighting);
+	finnModelAnimate.loadModel("../models/Finn/Finn_Normal.fbx"); //--------------------> Se carga el modelo (archivo de animaciones)
+	finnModelAnimate.setShader(&shaderMulLighting); // ----------------------> Se cargan los shaders
 
 	camera->setPosition(glm::vec3(0.0, 0.0, 10.0));
 	camera->setDistanceFromTarget(distanceFromTarget);
@@ -1215,8 +1215,9 @@ void destroy() {
 	modelIsla.destroy();
 
 	// Custom objects animate
-	mayowModelAnimate.destroy();
-	Finn.destroy();
+	//mayowModelAnimate.destroy();
+	
+	finnModelAnimate.destroy(); // -------------------------------> Se destruye el modelo de Finn
 
 	// Textures Delete
 	glBindTexture(GL_TEXTURE_2D, 0);
@@ -1449,16 +1450,16 @@ bool processInput(bool continueApplication) {
 		modelMatrixDart = glm::translate(modelMatrixDart, glm::vec3(0.02, 0.0, 0.0));
 
 	if (modelSelected == 2 && glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS){
-		modelMatrixMayow = glm::rotate(modelMatrixMayow, glm::radians(1.0f), glm::vec3(0, 1, 0));
+		modelMatrixFinn = glm::rotate(modelMatrixFinn, glm::radians(1.0f), glm::vec3(0, 1, 0));
 		animationIndex = 0;
 	}else if (modelSelected == 2 && glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS){
-		modelMatrixMayow = glm::rotate(modelMatrixMayow, glm::radians(-1.0f), glm::vec3(0, 1, 0));
+		modelMatrixFinn = glm::rotate(modelMatrixFinn, glm::radians(-1.0f), glm::vec3(0, 1, 0));
 		animationIndex = 0;
 	}if (modelSelected == 2 && glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS){
-		modelMatrixMayow = glm::translate(modelMatrixMayow, glm::vec3(0, 0, 0.02));
+		modelMatrixFinn = glm::translate(modelMatrixFinn, glm::vec3(0, 0, 0.02));
 		animationIndex = 0;
 	}else if (modelSelected == 2 && glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS){
-		modelMatrixMayow = glm::translate(modelMatrixMayow, glm::vec3(0, 0, -0.02));
+		modelMatrixFinn = glm::translate(modelMatrixFinn, glm::vec3(0, 0, -0.02));
 		animationIndex = 0;
 	}
 
@@ -1491,12 +1492,16 @@ void applicationLoop() {
 
 	modelMatrixDart = glm::translate(modelMatrixDart, glm::vec3(3.0, 0.0, 20.0));
 
-	modelMatrixMayow = glm::translate(modelMatrixMayow, glm::vec3(13.0f, 0.05f, -5.0f));
-	modelMatrixMayow = glm::rotate(modelMatrixMayow, glm::radians(-90.0f), glm::vec3(0, 1, 0));
+	/*modelMatrixMayow = glm::translate(modelMatrixMayow, glm::vec3(13.0f, 0.05f, -5.0f));
+	modelMatrixMayow = glm::rotate(modelMatrixMayow, glm::radians(-90.0f), glm::vec3(0, 1, 0));*/
 
 	modelMatrixFountain = glm::translate(modelMatrixFountain, glm::vec3(5.0, 0.0, -40.0));
 	modelMatrixFountain[3][1] = terrain.getHeightTerrain(modelMatrixFountain[3][0] , modelMatrixFountain[3][2]) + 0.2;
 	modelMatrixFountain = glm::scale(modelMatrixFountain, glm::vec3(10.0f, 10.0f, 10.0f));
+
+	// -----------------------------------------> Posición que estará Finn al ejecutar el programa
+	modelMatrixFinn = glm::translate(modelMatrixFinn, glm::vec3(3.0f, 0.05f, -10.0f));
+	modelMatrixFinn = glm::rotate(modelMatrixFinn, glm::radians(90.0f), glm::vec3(0, 1, 0));
 
 	// Variables to interpolation key frames
 	fileName = "../animaciones/animation_dart_joints.txt";
@@ -1541,9 +1546,13 @@ void applicationLoop() {
 			target = modelMatrixDart[3];
 		}
 		else {
-			axis = glm::axis(glm::quat_cast(modelMatrixMayow));
+			/*axis = glm::axis(glm::quat_cast(modelMatrixMayow));
 			angleTarget = glm::angle(glm::quat_cast(modelMatrixMayow));
-			target = modelMatrixMayow[3];
+			target = modelMatrixMayow[3];*/
+
+			axis = glm::axis(glm::quat_cast(modelMatrixFinn));
+			angleTarget = glm::angle(glm::quat_cast(modelMatrixFinn));
+			target = modelMatrixFinn[3];
 		}
 
 		if (std::isnan(angleTarget))
@@ -1883,20 +1892,20 @@ void applicationLoop() {
 		}
 
 		// Collider de mayow
-		AbstractModel::OBB mayowCollider;
-		glm::mat4 modelmatrixColliderMayow = glm::mat4(modelMatrixMayow);
-		modelmatrixColliderMayow = glm::rotate(modelmatrixColliderMayow,
-				glm::radians(-90.0f), glm::vec3(1, 0, 0));
-		// Set the orientation of collider before doing the scale
-		mayowCollider.u = glm::quat_cast(modelmatrixColliderMayow);
-		modelmatrixColliderMayow = glm::scale(modelmatrixColliderMayow, glm::vec3(0.021, 0.021, 0.021));
-		modelmatrixColliderMayow = glm::translate(modelmatrixColliderMayow,
-				glm::vec3(mayowModelAnimate.getObb().c.x,
-						mayowModelAnimate.getObb().c.y,
-						mayowModelAnimate.getObb().c.z));
-		mayowCollider.e = mayowModelAnimate.getObb().e * glm::vec3(0.021, 0.021, 0.021) * glm::vec3(0.787401574, 0.787401574, 0.787401574);
-		mayowCollider.c = glm::vec3(modelmatrixColliderMayow[3]);
-		addOrUpdateColliders(collidersOBB, "mayow", mayowCollider, modelMatrixMayow);
+		//AbstractModel::OBB mayowCollider;
+		//glm::mat4 modelmatrixColliderMayow = glm::mat4(modelMatrixMayow);
+		//modelmatrixColliderMayow = glm::rotate(modelmatrixColliderMayow,
+		//		glm::radians(-90.0f), glm::vec3(1, 0, 0));
+		//// Set the orientation of collider before doing the scale
+		//mayowCollider.u = glm::quat_cast(modelmatrixColliderMayow);
+		//modelmatrixColliderMayow = glm::scale(modelmatrixColliderMayow, glm::vec3(0.021, 0.021, 0.021));
+		//modelmatrixColliderMayow = glm::translate(modelmatrixColliderMayow,
+		//		glm::vec3(mayowModelAnimate.getObb().c.x,
+		//				mayowModelAnimate.getObb().c.y,
+		//				mayowModelAnimate.getObb().c.z));
+		//mayowCollider.e = mayowModelAnimate.getObb().e * glm::vec3(0.021, 0.021, 0.021) * glm::vec3(0.787401574, 0.787401574, 0.787401574);
+		//mayowCollider.c = glm::vec3(modelmatrixColliderMayow[3]);
+		//addOrUpdateColliders(collidersOBB, "mayow", mayowCollider, modelMatrixMayow);
 
 		/*******************************************
 		 * Render de colliders
@@ -2018,7 +2027,7 @@ void applicationLoop() {
 					addOrUpdateColliders(collidersOBB, jt->first);
 				else {
 					if (jt->first.compare("mayow") == 0)
-						modelMatrixMayow = std::get<1>(jt->second);
+						//modelMatrixMayow = std::get<1>(jt->second);
 					if (jt->first.compare("dart") == 0)
 						modelMatrixDart = std::get<1>(jt->second);
 				}
@@ -2207,7 +2216,8 @@ void prepareScene(){
 	modelGrass.setShader(&shaderMulLighting);
 
 	//Mayow
-	mayowModelAnimate.setShader(&shaderMulLighting);
+	//mayowModelAnimate.setShader(&shaderMulLighting);
+	finnModelAnimate.setShader(&shaderMulLighting); // -------------------> setShader para Finn
 }
 
 void prepareDepthScene(){
@@ -2252,7 +2262,10 @@ void prepareDepthScene(){
 	modelGrass.setShader(&shaderDepth);
 
 	//Mayow
-	mayowModelAnimate.setShader(&shaderDepth);
+	//mayowModelAnimate.setShader(&shaderDepth);
+
+	//FINN
+	finnModelAnimate.setShader(&shaderDepth); // ------------------> setShader para Finn
 }
 
 void renderScene(bool renderParticles){
@@ -2385,19 +2398,20 @@ void renderScene(bool renderParticles){
 	/*******************************************
 	 * Custom Anim objects obj
 	 *******************************************/
-	modelMatrixMayow[3][1] = -GRAVITY * tmv * tmv + 3.5 * tmv + terrain.getHeightTerrain(modelMatrixMayow[3][0], modelMatrixMayow[3][2]);
-	tmv = currTime - startTimeJump;
-	if(modelMatrixMayow[3][1] < terrain.getHeightTerrain(modelMatrixMayow[3][0], modelMatrixMayow[3][2])){
-		isJump = false;
-		modelMatrixMayow[3][1] = terrain.getHeightTerrain(modelMatrixMayow[3][0], modelMatrixMayow[3][2]);
-	}
-	//modelMatrixMayow[3][1] = terrain.getHeightTerrain(modelMatrixMayow[3][0], modelMatrixMayow[3][2]);
-	glm::mat4 modelMatrixMayowBody = glm::mat4(modelMatrixMayow);
-	modelMatrixMayowBody = glm::scale(modelMatrixMayowBody, glm::vec3(0.021, 0.021, 0.021));
-	mayowModelAnimate.setAnimationIndex(animationIndex);
-	mayowModelAnimate.render(modelMatrixMayowBody);
+	//modelMatrixMayow[3][1] = -GRAVITY * tmv * tmv + 3.5 * tmv + terrain.getHeightTerrain(modelMatrixMayow[3][0], modelMatrixMayow[3][2]);
+	//tmv = currTime - startTimeJump;
+	//if(modelMatrixMayow[3][1] < terrain.getHeightTerrain(modelMatrixMayow[3][0], modelMatrixMayow[3][2])){
+	//	isJump = false;
+	//	modelMatrixMayow[3][1] = terrain.getHeightTerrain(modelMatrixMayow[3][0], modelMatrixMayow[3][2]);
+	//}
+	////modelMatrixMayow[3][1] = terrain.getHeightTerrain(modelMatrixMayow[3][0], modelMatrixMayow[3][2]);
+	//glm::mat4 modelMatrixMayowBody = glm::mat4(modelMatrixMayow);
+	//modelMatrixMayowBody = glm::scale(modelMatrixMayowBody, glm::vec3(0.021, 0.021, 0.021));
+	//mayowModelAnimate.setAnimationIndex(animationIndex);
+	//mayowModelAnimate.render(modelMatrixMayowBody);
 
-	//Render Finn
+	
+	// -------------------------------------------> Render Finn
 	modelMatrixFinn[3][1] = -GRAVITY * tmv * tmv + 3.5 * tmv + terrain.getHeightTerrain(modelMatrixFinn[3][0], modelMatrixFinn[3][2]);
 	tmv = currTime - startTimeJump;
 	if (modelMatrixFinn[3][1] < terrain.getHeightTerrain(modelMatrixFinn[3][0], modelMatrixFinn[3][2])) {
@@ -2405,8 +2419,9 @@ void renderScene(bool renderParticles){
 		modelMatrixFinn[3][1] = terrain.getHeightTerrain(modelMatrixFinn[3][0], modelMatrixFinn[3][2]);
 	}
 	glm::mat4 modelMatrixFinnBody = glm::mat4(modelMatrixFinn);
-	modelMatrixFinnBody = glm::scale(modelMatrixFinnBody, glm::vec3(0.2f));
-	Finn.render(modelMatrixFinnBody);
+	modelMatrixFinnBody = glm::scale(modelMatrixFinnBody, glm::vec3(0.001f, 0.001f, 0.001f));
+	finnModelAnimate.setAnimationIndex(animationIndex);
+	finnModelAnimate.render(modelMatrixFinnBody);
 	
 	//Isla
 	glm::mat4 modelMatrixIsla2 = glm::mat4(modelMatrixIsla);
