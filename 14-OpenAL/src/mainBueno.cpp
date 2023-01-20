@@ -132,7 +132,9 @@ Model modelIsla;
 //Model mayowModelAnimate;
 Model finnModelAnimate; // -------------------------> Se crea el objeto Model de Finn
 // Terrain model instance
-Terrain terrain(-1, -1, 200, 16, "../Textures/heightmap.png");
+//Terrain terrain(-1, -1, 200, 16, "../Textures/heightmap.png");
+
+Terrain terrain(-1, -1, 200, 16, "../Textures/terrenoIslas.png");
 
 GLuint textureCespedID, textureWallID, textureWindowID, textureHighwayID, textureLandingPadID;
 GLuint textureTerrainBackgroundID, textureTerrainRID, textureTerrainGID, textureTerrainBID, textureTerrainBlendMapID;
