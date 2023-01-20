@@ -143,19 +143,19 @@ GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
 GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
 GL_TEXTURE_CUBE_MAP_NEGATIVE_Z };
 //
-//std::string fileNames[6] = { "../Textures/mp_bloodvalley/blood-valley_ft.tga",
-//		"../Textures/mp_bloodvalley/blood-valley_bk.tga",
-//		"../Textures/mp_bloodvalley/blood-valley_up.tga",
-//		"../Textures/mp_bloodvalley/blood-valley_dn.tga",
-//		"../Textures/mp_bloodvalley/blood-valley_rt.tga",
-//		"../Textures/mp_bloodvalley/blood-valley_lf.tga" };
-// 
-std::string fileNames[6] = { "../Textures/skybox_islas/front.png",
-		"../Textures/skybox_islas/back.png",
-		"../Textures/skybox_islas/top.png",
-		"../Textures/skybox_islas/bottom.png",
-		"../Textures/skybox_islas/right.png",
-		"../Textures/skybox_islas/left.png" };
+std::string fileNames[6] = { "../Textures/mp_bloodvalley/blood-valley_ft.tga",
+		"../Textures/mp_bloodvalley/blood-valley_bk.tga",
+		"../Textures/mp_bloodvalley/blood-valley_up.tga",
+		"../Textures/mp_bloodvalley/blood-valley_dn.tga",
+		"../Textures/mp_bloodvalley/blood-valley_rt.tga",
+		"../Textures/mp_bloodvalley/blood-valley_lf.tga" };
+
+//std::string fileNames[6] = { "../Textures/skybox_islas/front.png",
+//		"../Textures/skybox_islas/back.png",
+//		"../Textures/skybox_islas/top.png",
+//		"../Textures/skybox_islas/bottom.png",
+//		"../Textures/skybox_islas/right.png",
+//		"../Textures/skybox_islas/left.png" };
 
 bool exitApp = false;
 int lastMousePosX, offsetX = 0;
@@ -175,9 +175,13 @@ glm::mat4 modelMatrixMartillo7 = glm::mat4(1.0f);
 glm::mat4 modelMatrixMartillo8 = glm::mat4(1.0f);
 glm::mat4 modelMatrixMartillo9 = glm::mat4(1.0f);
 glm::mat4 modelMatrixMartillo10 = glm::mat4(1.0f);
-glm::mat4 modelMatrixFinn = glm::mat4(1.0f); // ------------------------------> Matrix para Finn
+glm::mat4 modelMatrixFinn = glm::mat4(1.0f);// ------------------------------> Matrix para Finn
+glm::mat4 modelMatrixFinnInicio = glm::mat4(1.0f);
 glm::mat4 modelMatrixJacke = glm::mat4(1.0f);
 
+glm::vec3 posInicio = glm::vec3(3.0f, 0.05f, -10.0f);
+
+int vidas = 5;
 float rotMartillo;
 float trasMartillo;
 bool martilloRegreso;
@@ -687,7 +691,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	textureWall.freeImage(bitmap);
 
 	// Definiendo la textura a utilizar
-	Texture textureWindow("../Textures/goku.png");
+	Texture textureWindow("../Textures/InterfazVidasEspadas/5Vidas0Espadas.png");
 	// Carga el mapa de bits (FIBITMAP es el tipo de dato de la libreria)
 	bitmap = textureWindow.loadImage();
 	// Convertimos el mapa de bits en un arreglo unidimensional de tipo unsigned char
@@ -1277,147 +1281,86 @@ bool processInput(bool continueApplication) {
 		return false;
 
 	}
-	// ---------------------------------------------> JOYSTICK
-	std::cout << "Esta conectado el Joystick 0" << std::endl;
 	int numeroAxes, numeroBotones;
-	const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &numeroAxes);
-	std::cout << "Numero de ejes:=>" << numeroAxes << std::endl;
-	std::cout << "Axes[0]=>" << axes[0] << std::endl;
-	std::cout << "Axes[1]=>" << axes[1] << std::endl;
-	std::cout << "Axes[2]=>" << axes[2] << std::endl;
-	std::cout << "Axes[3]=>" << axes[3] << std::endl;
-	std::cout << "Axes[4]=>" << axes[4] << std::endl;
-	std::cout << "Axes[5]=>" << axes[5] << std::endl;
-	std::cout << "Axes[6]=>" << axes[6] << std::endl;
-	std::cout << "Axes[7]=>" << axes[7] << std::endl;
-	std::cout << "Axes[8]=>" << axes[8] << std::endl; 
-	std::cout << "Axes[9]=>" << axes[9] << std::endl;
-
-	/*if (fabs(axes[1]) > 0.2f) {
-		modelMatrixFinn = glm::translate(modelMatrixFinn, glm::vec3(0, 0, axes[3] * 0.1f));
-		animationIndex = 0;
-	}
-	if (fabs(axes[0]) > 0.2f) {
-		modelMatrixFinn = glm::rotate(modelMatrixFinn, glm::radians(-axes[0] * 0.5f), glm::vec3(0, 1, 0));
-		animationIndex = 0;
-	}*/
-
-	/*if (fabs(axes[2]) > 0.2) {
-		camera->mouseMoveCamera(axes[2] * 0.5, 0, deltaTime);
-	}
-
-	if (fabs(axes[3]) > 0.2) {
-		camera->mouseMoveCamera(0, -axes[3] * 0.5, deltaTime);
-	}*/
-
 	const unsigned char* botones = glfwGetJoystickButtons(GLFW_JOYSTICK_1, &numeroBotones);
-	std::cout << "Numero de Botones:=>" << numeroBotones;
+	const float* axes = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &numeroAxes);
 
-	// ---------------------------------------------> Botones para control de XBOX
-	/*if (botones[1] == GLFW_PRESS)
-		std::cout << "Se presiona el boton B :=>" << std::endl;
-	if (botones[2] == GLFW_PRESS)
-		std::cout << "Se presiona el boton X :=>" << std::endl;
-	if (botones[3] == GLFW_PRESS)
-		std::cout << "Se presiona el boton Y :=>" << std::endl;
-	if (botones[4] == GLFW_PRESS)
-		std::cout << "Se presiona el boton LB :=>" << std::endl;
-	if (botones[5] == GLFW_PRESS)
-		std::cout << "Se presiona el boton RB: =>" << std::endl;
-	if (botones[6] == GLFW_PRESS)
-		std::cout << "Se presiona el boton OPTIONS :=>" << std::endl;
-	if (botones[7] == GLFW_PRESS)
-		std::cout << "Se presiona el boton START :=>" << std::endl;
-	if (botones[8] == GLFW_PRESS)
-		std::cout << "Se presiona el boton  JOYSTICKIZQ:=>" << std::endl;
-	if (botones[9] == GLFW_PRESS)
-		std::cout << "Se presiona el boton JOYSTICKDER :=>" << std::endl;
-	if (botones[10] == GLFW_PRESS)
-		std::cout << "Se presiona el boton CRUZARRIBA :=>" << std::endl;
-	if (botones[11] == GLFW_PRESS)
-		std::cout << "Se presiona el boton CRUZDER :=>" << std::endl;
-	if (botones[12] == GLFW_PRESS)
-		std::cout << "Se presiona el boton CRUZABAJO :=>" << std::endl;
-	if (botones[13] == GLFW_PRESS)
-		std::cout << "Se presiona el boton CRUZIZQ :=>" << std::endl;
-	if (botones[14] == GLFW_PRESS)
-		std::cout << "Se presiona el boton CRUZ ABAJO :=>" << std::endl;
-	if (botones[15] == GLFW_PRESS)
-		std::cout << "Se presiona el boton CRUZ ARRIBA :=>" << std::endl;
-	if (botones[16] == GLFW_PRESS)
-		std::cout << "Se presiona el boton X :=>" << std::endl;*/
+	// ---------------------------------------------> JOYSTICK Xbox
+	if (glfwJoystickPresent(0)) {
+		std::cout << "Esta conectado el Joystick 0" << std::endl;
+		std::cout << "Numero de ejes:=>" << numeroAxes << std::endl;
+		std::cout << "Axes[0]=>" << axes[0] << std::endl;
+		std::cout << "Axes[1]=>" << axes[1] << std::endl;
+		std::cout << "Axes[2]=>" << axes[2] << std::endl;
+		std::cout << "Axes[3]=>" << axes[3] << std::endl;
+		std::cout << "Axes[4]=>" << axes[4] << std::endl;
+		std::cout << "Axes[5]=>" << axes[5] << std::endl;
 
-	// --------------------------------------------------------> Botones para joystick generico
-	if (botones[1] == GLFW_PRESS)
-		std::cout << "Se presiona el boton O :=>" << std::endl;
-	if (botones[2] == GLFW_PRESS)
-		std::cout << "Se presiona el boton X :=>" << std::endl;
-	if (botones[3] == GLFW_PRESS)
-		std::cout << "Se presiona el boton CUADRADO :=>" << std::endl;
-	if (botones[4] == GLFW_PRESS)
-		std::cout << "Se presiona el boton L2 :=>" << std::endl;
-	if (botones[5] == GLFW_PRESS)
-		std::cout << "Se presiona el boton R2: =>" << std::endl;
-	if (botones[6] == GLFW_PRESS)
-		std::cout << "Se presiona el boton L1 :=>" << std::endl;
-	if (botones[7] == GLFW_PRESS)
-		std::cout << "Se presiona el boton R1 :=>" << std::endl;
-	if (botones[8] == GLFW_PRESS)
-		std::cout << "Se presiona el boton SELECT :=>" << std::endl;
-	if (botones[9] == GLFW_PRESS)
-		std::cout << "Se presiona el boton START :=>" << std::endl;
-	if (botones[10] == GLFW_PRESS)
-		std::cout << "Se presiona el boton JOYSIZQ :=>" << std::endl;
-	if (botones[11] == GLFW_PRESS)
-		std::cout << "Se presiona el boton JOYSDERECHA :=>" << std::endl;
-	if (botones[12] == GLFW_PRESS)
-		std::cout << "Se presiona el boton CRUZ ARRIBA :=>" << std::endl;
-	if (botones[13] == GLFW_PRESS)
-		std::cout << "Se presiona el boton CRUZ DERECHA :=>" << std::endl;
-	if (botones[14] == GLFW_PRESS)
-		std::cout << "Se presiona el boton CRUZ ABAJO :=>" << std::endl;
-	if (botones[15] == GLFW_PRESS)
-		std::cout << "Se presiona el boton CRUZ IZQ :=>" << std::endl;
-	if (botones[16] == GLFW_PRESS)
-		std::cout << "Se presiona el boton LOL :=>" << std::endl;
+		//codigo para mover al personaje y la camara
 
-	if (botones[13] == GLFW_PRESS) { // ----------------------------------> MOVIMIENTO A LA DERECHA (CRUZ DERECHA)
-		modelMatrixFinn = glm::rotate(modelMatrixFinn, glm::radians(-2.0f * 0.5f), glm::vec3(0, 1, 0));
-		animationIndex = 0;
-	}
-	if (botones[15] == GLFW_PRESS) { // --------------------------------------> MOVIMIENTO A LA IZQUIERDA (CRUZ IZQ)
-		modelMatrixFinn = glm::rotate(modelMatrixFinn, glm::radians(2.0f * 0.5f), glm::vec3(0, 1, 0));
-		animationIndex = 0;
-	}
-	if (botones[12] == GLFW_PRESS) { // ------------------------------------------> MOVIMIENTO ENFRENTE (CRUZ ARRIBA)
-		modelMatrixFinn = glm::translate(modelMatrixFinn, glm::vec3(0, 0, 0.5f * 0.1f));
-		animationIndex = 0;
-	}
-	if (botones[14] == GLFW_PRESS) { // --------------------------------------> MOVIMIENTO ATRAS (CRUZ ABAJO)
-		modelMatrixFinn = glm::translate(modelMatrixFinn, glm::vec3(0, 0, -0.5f * 0.1f));
-		animationIndex = 0;
-	}
-	if (botones[6] == GLFW_PRESS) { // -----------------> MOVIMIENTO DE CAMARA A LA IZQ (L1)
-		camera->mouseMoveCamera(2.0 * 0.5, 0, deltaTime);
-	}
-	if (botones[4] == GLFW_PRESS) { // -------------------> MOVIMIENTO DE CAMARA A LA DERECHA (L2)
-		camera->mouseMoveCamera(-2.0 * 0.5, 0, deltaTime);
-	}
-	if (botones[7] == GLFW_PRESS) { // ---------------------> MOVIMIENTO DE CAMARA ARRIBA (R1)
-		camera->mouseMoveCamera(0, -2.0 * 0.5, deltaTime);
-	}
-	if (botones[5] == GLFW_PRESS) { // --------------------> MOVIMIENTO DE CAMARA ABAJO (R2)
-		camera->mouseMoveCamera(0, 2.0 * 0.5, deltaTime);
+		if (fabs(axes[1]) > 0.2f) {
+			modelMatrixFinn = glm::translate(modelMatrixFinn, glm::vec3(0, 0, axes[1] * 0.12f));
+			animationIndex = 0;
+		}
+		if (fabs(axes[0]) > 0.2f) {
+			modelMatrixFinn = glm::rotate(modelMatrixFinn, glm::radians(-axes[0] * 0.5f), glm::vec3(0, 1, 0));
+			animationIndex = 0;
+		}
+
+		if (fabs(axes[2]) > 0.2) {
+			camera->mouseMoveCamera(axes[2] * 0.5, 0, deltaTime);
+		}
+
+		if (fabs(axes[3]) > 0.2) {
+			camera->mouseMoveCamera(0, -axes[3] * 0.5, deltaTime);
+		}
+
+		
+		std::cout << "Numero de Botones:=>" << numeroBotones;
+		//codigo para el salto
+		if (!isJump && botones[0] == GLFW_PRESS) {
+			std::cout << "Se presiona el boton A :=>" << std::endl;
+			isJump = true;
+			startTimeJump = currTime;
+			tmv = 0;
+		}
+		if (botones[1] == GLFW_PRESS)
+			std::cout << "Se presiona el boton B :=>" << std::endl;
+		if (botones[2] == GLFW_PRESS)
+			std::cout << "Se presiona el boton X :=>" << std::endl;
+		if (botones[3] == GLFW_PRESS)
+			std::cout << "Se presiona el boton Y :=>" << std::endl;
+		if (botones[4] == GLFW_PRESS)
+			std::cout << "Se presiona el boton LB :=>" << std::endl;
+		if (botones[5] == GLFW_PRESS)
+			std::cout << "Se presiona el boton RB: =>" << std::endl;
+		if (botones[6] == GLFW_PRESS)
+			std::cout << "Se presiona el boton OPTIONS :=>" << std::endl;
+		if (botones[7] == GLFW_PRESS)
+			std::cout << "Se presiona el boton START :=>" << std::endl;
+		if (botones[8] == GLFW_PRESS)
+			std::cout << "Se presiona el boton  JOYSTICKIZQ:=>" << std::endl;
+		if (botones[9] == GLFW_PRESS)
+			std::cout << "Se presiona el boton JOYSTICKDER :=>" << std::endl;
+		if (botones[10] == GLFW_PRESS)
+			std::cout << "Se presiona el boton CRUZARRIBA :=>" << std::endl;
+		if (botones[11] == GLFW_PRESS)
+			std::cout << "Se presiona el boton CRUZDER :=>" << std::endl;
+		if (botones[12] == GLFW_PRESS)
+			std::cout << "Se presiona el boton CRUZABAJO :=>" << std::endl;
+		if (botones[13] == GLFW_PRESS)
+			std::cout << "Se presiona el boton CRUZIZQ :=>" << std::endl;
+
 	}
 
 	if (!iniciaPartida) {
 		bool statusEnter = glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS;
-		bool statusStart = botones[9] == GLFW_PRESS; // ----------------------------> BOTON START
+		bool statusStart = botones[7] == GLFW_PRESS; // ----------------------------> BOTON START
 		if ((texturaActivaID == textureCespedID && statusEnter) ||
 			(texturaActivaID == textureCespedID && statusStart)) {
 			iniciaPartida = true;
 		}
-		if (!presionarOpcion && glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+		if ((!presionarOpcion && glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS )||(!presionarOpcion && botones[11]==GLFW_PRESS)) {
 			presionarOpcion = true;
 			if (texturaActivaID == textureCespedID) {
 				texturaActivaID = textureWallID;
@@ -1426,9 +1369,8 @@ bool processInput(bool continueApplication) {
 				texturaActivaID = textureCespedID;
 			}
 		}
-		else if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_RELEASE) {
+		else if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_RELEASE && botones[11]==GLFW_RELEASE) {
 			presionarOpcion = false;
-
 		}
 	}
 
@@ -1445,11 +1387,6 @@ bool processInput(bool continueApplication) {
 		modelSelected++;
 		if(modelSelected > 2)
 			modelSelected = 0;
-		/*if(modelSelected == 1)
-			fileName = "../animaciones/animation_dart_joints.txt";
-		if (modelSelected == 2)
-			fileName = "../animaciones/animation_dart.txt";
-		std::cout << "modelSelected:" << modelSelected << std::endl;*/
 	}
 	else if(glfwGetKey(window, GLFW_KEY_TAB) == GLFW_RELEASE)
 		enableCountSelected = true;
@@ -1462,10 +1399,10 @@ bool processInput(bool continueApplication) {
 		modelMatrixFinn = glm::rotate(modelMatrixFinn, glm::radians(-1.0f), glm::vec3(0, 1, 0));
 		animationIndex = 0;
 	}else if (modelSelected == 2 && glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS){
-		modelMatrixFinn = glm::translate(modelMatrixFinn, glm::vec3(0, 0, 0.7));
+		modelMatrixFinn = glm::translate(modelMatrixFinn, glm::vec3(0, 0, 0.05));
 		animationIndex = 0;
 	}else if (modelSelected == 2 && glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS){
-		modelMatrixFinn = glm::translate(modelMatrixFinn, glm::vec3(0, 0, -0.7));
+		modelMatrixFinn = glm::translate(modelMatrixFinn, glm::vec3(0, 0, -0.05));
 		animationIndex = 0;
 	}
 	else {
@@ -1500,8 +1437,11 @@ void applicationLoop() {
 	modelMatrixFountain = glm::scale(modelMatrixFountain, glm::vec3(10.0f, 10.0f, 10.0f));
 
 	// -----------------------------------------> Posición que estará Finn al ejecutar el programa
-	modelMatrixFinn = glm::translate(modelMatrixFinn, glm::vec3(3.0f, 0.05f, -10.0f));
-	modelMatrixFinn = glm::rotate(modelMatrixFinn, glm::radians(90.0f), glm::vec3(0, 1, 0));
+	modelMatrixFinnInicio = glm::translate(modelMatrixFinnInicio, glm::vec3(-90.0f, 0.05f, 65.0f));
+	modelMatrixFinnInicio = glm::rotate(modelMatrixFinnInicio, glm::radians(105.0f), glm::vec3(0, 1, 0));
+
+	modelMatrixFinn = glm::translate(modelMatrixFinn, glm::vec3(-90.0f, 0.05f, 65.0f));
+	modelMatrixFinn = glm::rotate(modelMatrixFinn, glm::radians(105.0f), glm::vec3(0, 1, 0));
 
 	modelMatrixJacke = glm::translate(modelMatrixJacke, glm::vec3(1.0f, 0.05f, -5.0f));
 	modelMatrixJacke = glm::rotate(modelMatrixJacke, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
@@ -1563,17 +1503,11 @@ void applicationLoop() {
 
 		std::map<std::string, bool> collisionDetection;
 
-		// Variables donde se guardan las matrices de cada articulacion por 1 frame
-		std::vector<float> matrixDartJoints;
-		std::vector<glm::mat4> matrixDart;
 
 		glm::mat4 projection = glm::perspective(glm::radians(45.0f),
 			(float)screenWidth / (float)screenHeight, 0.1f, 100.0f);
 
 		if (modelSelected == 2) {
-			/*axis = glm::axis(glm::quat_cast(modelMatrixMayow));
-			angleTarget = glm::angle(glm::quat_cast(modelMatrixMayow));
-			target = modelMatrixMayow[3];*/
 
 			axis = glm::axis(glm::quat_cast(modelMatrixFinn));
 			angleTarget = glm::angle(glm::quat_cast(modelMatrixFinn));
@@ -1797,11 +1731,11 @@ void applicationLoop() {
 
 		//Interfaz del juego
 
-		/*shaderTextura.setMatrix4("view", 1, false, glm::value_ptr(glm::mat4(1.0)));
+		shaderTextura.setMatrix4("view", 1, false, glm::value_ptr(glm::mat4(1.0)));
 		shaderTextura.setMatrix4("projection", 1, false, glm::value_ptr(glm::mat4(1.0)));
 		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, textureWindowID);
-		boxIntro.render();*/
+		boxIntro.render();
 
 		prepareScene();
 		glActiveTexture(GL_TEXTURE10);
@@ -2061,6 +1995,8 @@ void applicationLoop() {
 					std::cout << "Colision " << it->first << " with "
 							<< jt->first << std::endl;
 					isCollision = true;
+					
+				
 				}
 			}
 			addOrUpdateCollisionDetection(collisionDetection, it->first, isCollision);
@@ -2120,10 +2056,13 @@ void applicationLoop() {
 				if (!colIt->second)
 					addOrUpdateColliders(collidersOBB, jt->first);
 				else {
-					if (jt->first.compare("Finn") == 0)
+					if (jt->first.compare("Finn") == 0) {
 						modelMatrixFinn = std::get<1>(jt->second);
+					}
 					if (jt->first.compare("Martillo") == 0)
 						modelMatrixMartillo = std::get<1>(jt->second);
+						vidas--;
+						modelMatrixFinn = glm::mat4(modelMatrixFinnInicio);
 				}
 			}
 		}
@@ -2153,7 +2092,7 @@ void applicationLoop() {
 				MartillotrasRegreso = true;
 		}
 		if (MartillotrasRegreso == true) {
-			if (trasMartillo > -2) {
+			if (trasMartillo > -1.5) {
 				trasMartillo -= 0.05f;
 			}
 			else
@@ -2412,12 +2351,6 @@ void renderScene(bool renderParticles){
 	/**********
 	 * Update the position with alpha objects
 	 */
-	//// Update the aircraft
-	//blendingUnsorted.find("aircraft")->second = glm::vec3(modelMatrixAircraft[3]);
-	//// Update the lambo
-	//blendingUnsorted.find("lambo")->second = glm::vec3(modelMatrixLambo[3]);
-	//// Update the helicopter
-	//blendingUnsorted.find("heli")->second = glm::vec3(modelMatrixHeli[3]);
 
 	/**********
 	 * Sorter with alpha objects
