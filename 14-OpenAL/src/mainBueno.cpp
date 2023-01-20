@@ -2160,8 +2160,8 @@ void renderScene(bool renderParticles){
 	//----------------------------------------> Render de Jacke
 	glDisable(GL_CULL_FACE);
 	glm::mat4 modelMatrixJackeBody = glm::mat4(modelMatrixJacke);
-	modelMatrixJackeBody = glm::scale(modelMatrixJackeBody, glm::vec3(0.002f, 0.002f, 0.002f));
-	jackeModelAnimate.setAnimationIndex(animationIndex);
+	modelMatrixJackeBody = glm::scale(modelMatrixJackeBody, glm::vec3(0.2f, 0.2f, 0.2f));
+	jackeModelAnimate.setAnimationIndex(0);
 	jackeModelAnimate.render(modelMatrixJackeBody);
 	glEnable(GL_CULL_FACE);
 
