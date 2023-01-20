@@ -134,7 +134,7 @@ Model finnModelAnimate; // -------------------------> Se crea el objeto Model de
 // Terrain model instance
 //Terrain terrain(-1, -1, 200, 16, "../Textures/heightmap.png");
 
-Terrain terrain(-1, -1, 200, 16, "../Textures/terrenoIslas.png");
+Terrain terrain(-1, -1, 200, 16, "../Textures/terrenoIslas3.png");
 
 GLuint textureCespedID, textureWallID, textureWindowID, textureHighwayID, textureLandingPadID;
 GLuint textureTerrainBackgroundID, textureTerrainRID, textureTerrainGID, textureTerrainBID, textureTerrainBlendMapID;
