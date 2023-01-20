@@ -104,8 +104,17 @@ Model modelGrass;
 // Fountain
 Model modelFountain;
 
-//Martillo
+//Martillos
 Model modelMartillo;
+Model modelMartillo2;
+Model modelMartillo3;
+Model modelMartillo4;
+Model modelMartillo5;
+Model modelMartillo6;
+Model modelMartillo7;
+Model modelMartillo8;
+Model modelMartillo9;
+Model modelMartillo10;
 
 // Model animate instance
 // Mayow
@@ -156,11 +165,23 @@ int lastMousePosY, offsetY = 0;
 //glm::mat4 modelMatrixMayow = glm::mat4(1.0f);
 glm::mat4 modelMatrixFountain = glm::mat4(1.0f);
 glm::mat4 modelMatrixMartillo = glm::mat4(1.0f);
+glm::mat4 modelMatrixMartillo1 = glm::mat4(1.0f);
+glm::mat4 modelMatrixMartillo2 = glm::mat4(1.0f);
+glm::mat4 modelMatrixMartillo3 = glm::mat4(1.0f);
+glm::mat4 modelMatrixMartillo4 = glm::mat4(1.0f);
+glm::mat4 modelMatrixMartillo5 = glm::mat4(1.0f);
+glm::mat4 modelMatrixMartillo6 = glm::mat4(1.0f);
+glm::mat4 modelMatrixMartillo7 = glm::mat4(1.0f);
+glm::mat4 modelMatrixMartillo8 = glm::mat4(1.0f);
+glm::mat4 modelMatrixMartillo9 = glm::mat4(1.0f);
+glm::mat4 modelMatrixMartillo10 = glm::mat4(1.0f);
 glm::mat4 modelMatrixFinn = glm::mat4(1.0f); // ------------------------------> Matrix para Finn
 glm::mat4 modelMatrixJacke = glm::mat4(1.0f);
 
 float rotMartillo;
+float trasMartillo;
 bool martilloRegreso;
+bool MartillotrasRegreso;
 int animationIndex = 1;
 float rotDartHead = 0.0, rotDartLeftArm = 0.0, rotDartLeftHand = 0.0, rotDartRightArm = 0.0, rotDartRightHand = 0.0, rotDartLeftLeg = 0.0, rotDartRightLeg = 0.0;
 int modelSelected = 2;
@@ -534,6 +555,24 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	//Martillo
 	modelMartillo.loadModel("../models/martillo/martillo.obj");
 	modelMartillo.setShader(&shaderMulLighting);
+	modelMartillo2.loadModel("../models/martillo/martillo.obj");
+	modelMartillo2.setShader(&shaderMulLighting);
+	modelMartillo3.loadModel("../models/martillo/martillo.obj");
+	modelMartillo3.setShader(&shaderMulLighting);
+	modelMartillo4.loadModel("../models/martillo/martillo.obj");
+	modelMartillo4.setShader(&shaderMulLighting);
+	modelMartillo5.loadModel("../models/martillo/martillo.obj");
+	modelMartillo5.setShader(&shaderMulLighting);
+	modelMartillo6.loadModel("../models/martillo/martillo.obj");
+	modelMartillo6.setShader(&shaderMulLighting);
+	modelMartillo7.loadModel("../models/martillo/martillo.obj");
+	modelMartillo7.setShader(&shaderMulLighting);
+	modelMartillo8.loadModel("../models/martillo/martillo.obj");
+	modelMartillo8.setShader(&shaderMulLighting);
+	modelMartillo9.loadModel("../models/martillo/martillo.obj");
+	modelMartillo9.setShader(&shaderMulLighting);
+	modelMartillo10.loadModel("../models/martillo/martillo.obj");
+	modelMartillo10.setShader(&shaderMulLighting);
 
 
 	//Mayow
@@ -1109,6 +1148,15 @@ void destroy() {
 	modelGrass.destroy();
 	modelFountain.destroy();
 	modelMartillo.destroy();
+	modelMartillo2.destroy();
+	modelMartillo3.destroy();
+	modelMartillo4.destroy();
+	modelMartillo5.destroy();
+	modelMartillo6.destroy();
+	modelMartillo7.destroy();
+	modelMartillo8.destroy();
+	modelMartillo9.destroy();
+	modelMartillo10.destroy();
 	// Custom objects animate
 	//mayowModelAnimate.destroy();
 	
@@ -1414,10 +1462,10 @@ bool processInput(bool continueApplication) {
 		modelMatrixFinn = glm::rotate(modelMatrixFinn, glm::radians(-1.0f), glm::vec3(0, 1, 0));
 		animationIndex = 0;
 	}else if (modelSelected == 2 && glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS){
-		modelMatrixFinn = glm::translate(modelMatrixFinn, glm::vec3(0, 0, 0.05));
+		modelMatrixFinn = glm::translate(modelMatrixFinn, glm::vec3(0, 0, 0.7));
 		animationIndex = 0;
 	}else if (modelSelected == 2 && glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS){
-		modelMatrixFinn = glm::translate(modelMatrixFinn, glm::vec3(0, 0, -0.05));
+		modelMatrixFinn = glm::translate(modelMatrixFinn, glm::vec3(0, 0, -0.7));
 		animationIndex = 0;
 	}
 	else {
@@ -1457,6 +1505,37 @@ void applicationLoop() {
 
 	modelMatrixJacke = glm::translate(modelMatrixJacke, glm::vec3(1.0f, 0.05f, -5.0f));
 	modelMatrixJacke = glm::rotate(modelMatrixJacke, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
+
+	modelMatrixMartillo = glm::translate(modelMatrixMartillo, glm::vec3(26,2.5,23));
+	modelMatrixMartillo = glm::rotate(modelMatrixMartillo, glm::radians(90.0f), glm::vec3(0, 1, 0));
+
+	modelMatrixMartillo2 = glm::translate(modelMatrixMartillo2, glm::vec3(18, 2.5, 35));
+	modelMatrixMartillo2 = glm::rotate(modelMatrixMartillo2, glm::radians(45.0f), glm::vec3(0, 1, 0));
+
+	modelMatrixMartillo3 = glm::translate(modelMatrixMartillo3, glm::vec3(10, 2.5, 45));	
+	modelMatrixMartillo3 = glm::rotate(modelMatrixMartillo3, glm::radians(45.0f), glm::vec3(0, 1, 0));
+
+	modelMatrixMartillo4 = glm::translate(modelMatrixMartillo4, glm::vec3(7, 2.5, 47));
+	modelMatrixMartillo4 = glm::rotate(modelMatrixMartillo4, glm::radians(45.0f), glm::vec3(0, 1, 0));
+
+	modelMatrixMartillo5 = glm::translate(modelMatrixMartillo5, glm::vec3(-10, 6, 60));
+	modelMatrixMartillo5 = glm::rotate(modelMatrixMartillo5, glm::radians(-90.0f), glm::vec3(1, 0, 0));
+
+	modelMatrixMartillo6 = glm::translate(modelMatrixMartillo6, glm::vec3(-17, 6, 60));
+	modelMatrixMartillo6 = glm::rotate(modelMatrixMartillo6, glm::radians(90.0f), glm::vec3(1, 0, 0));
+
+	modelMatrixMartillo7 = glm::translate(modelMatrixMartillo7, glm::vec3(-17, 6, 60));
+	modelMatrixMartillo7 = glm::rotate(modelMatrixMartillo7, glm::radians(-90.0f), glm::vec3(1, 0 ,0));
+
+	modelMatrixMartillo8 = glm::translate(modelMatrixMartillo8, glm::vec3(-10, 6, 60));
+	modelMatrixMartillo8 = glm::rotate(modelMatrixMartillo8, glm::radians(90.0f), glm::vec3(1, 0, 0));
+
+	modelMatrixMartillo9 = glm::translate(modelMatrixMartillo9, glm::vec3(26, 2.5, 30));
+	modelMatrixMartillo9 = glm::rotate(modelMatrixMartillo9, glm::radians(75.0f), glm::vec3(0, 1, 0));
+
+	modelMatrixMartillo10 = glm::translate(modelMatrixMartillo10, glm::vec3(26, 2.5, 30));
+	modelMatrixMartillo10 = glm::rotate(modelMatrixMartillo10, glm::radians(75.0f), glm::vec3(0, 1, 0));
+
 
 
 	lastTime = TimeManager::Instance().GetTime();
@@ -1807,13 +1886,110 @@ void applicationLoop() {
 		glm::mat4 modelMatrixColliderMartillo = glm::mat4(modelMatrixMartillo);
 		modelMatrixColliderMartillo = glm::translate(modelMatrixColliderMartillo, glm::vec3(0, 10,-0.2));
 		modelMatrixColliderMartillo = glm::rotate(modelMatrixColliderMartillo, glm::radians(rotMartillo), glm::vec3(1, 0, 0));
-		//modelMatrixColliderMartillo = glm::rotate(modelMatrixColliderMartillo, glm::radians(-180.0f), glm::vec3(1,0,0));
 		MartilloCollider.u = glm::quat_cast(modelMatrixColliderMartillo);
 		modelMatrixColliderMartillo = glm::scale(modelMatrixColliderMartillo,glm::vec3(0.1f));
 		modelMatrixColliderMartillo = glm::translate(modelMatrixColliderMartillo, glm::vec3(modelMartillo.getObb().c.x, modelMartillo.getObb().c.y, modelMartillo.getObb().c.z));
 		MartilloCollider.e = modelMartillo.getObb().e * glm::vec3(0.1f);
 		MartilloCollider.c = glm::vec3(modelMatrixColliderMartillo[3]);
 		addOrUpdateColliders(collidersOBB, "Martillo", MartilloCollider, modelMatrixMartillo);
+
+		AbstractModel::OBB Martillo2Collider;
+		glm::mat4 modelMatrixColliderMartillo2 = glm::mat4(modelMatrixMartillo2);
+		modelMatrixColliderMartillo2 = glm::translate(modelMatrixColliderMartillo2, glm::vec3(0, 10, -0.2));
+		modelMatrixColliderMartillo2 = glm::rotate(modelMatrixColliderMartillo2, glm::radians(-rotMartillo), glm::vec3(1, 0, 0));
+		Martillo2Collider.u = glm::quat_cast(modelMatrixColliderMartillo2);
+		modelMatrixColliderMartillo2 = glm::scale(modelMatrixColliderMartillo2, glm::vec3(0.1f));
+		modelMatrixColliderMartillo2 = glm::translate(modelMatrixColliderMartillo2, glm::vec3(modelMartillo2.getObb().c.x, modelMartillo2.getObb().c.y, modelMartillo2.getObb().c.z));
+		Martillo2Collider.e = modelMartillo2.getObb().e * glm::vec3(0.1f);
+		Martillo2Collider.c = glm::vec3(modelMatrixColliderMartillo2[3]);
+		addOrUpdateColliders(collidersOBB, "Martillo2", Martillo2Collider, modelMatrixMartillo2);
+
+		AbstractModel::OBB Martillo3Collider;
+		glm::mat4 modelMatrixColliderMartillo3 = glm::mat4(modelMatrixMartillo3);
+		modelMatrixColliderMartillo3 = glm::translate(modelMatrixColliderMartillo3, glm::vec3(0, 10, -0.2));
+		modelMatrixColliderMartillo3 = glm::rotate(modelMatrixColliderMartillo3, glm::radians(rotMartillo), glm::vec3(1, 0, 0));
+		Martillo3Collider.u = glm::quat_cast(modelMatrixColliderMartillo3);
+		modelMatrixColliderMartillo3 = glm::scale(modelMatrixColliderMartillo3, glm::vec3(0.1f));
+		modelMatrixColliderMartillo3 = glm::translate(modelMatrixColliderMartillo3, glm::vec3(modelMartillo3.getObb().c.x, modelMartillo3.getObb().c.y, modelMartillo3.getObb().c.z));
+		Martillo3Collider.e = modelMartillo3.getObb().e * glm::vec3(0.1f);
+		Martillo3Collider.c = glm::vec3(modelMatrixColliderMartillo3[3]);
+		addOrUpdateColliders(collidersOBB, "Martillo3", Martillo3Collider, modelMatrixMartillo3);
+
+		AbstractModel::OBB Martillo4Collider;
+		glm::mat4 modelMatrixColliderMartillo4 = glm::mat4(modelMatrixMartillo4);
+		modelMatrixColliderMartillo4 = glm::translate(modelMatrixColliderMartillo4, glm::vec3(0, 10, -0.2));
+		modelMatrixColliderMartillo4 = glm::rotate(modelMatrixColliderMartillo4, glm::radians(-rotMartillo), glm::vec3(1, 0, 0));
+		Martillo4Collider.u = glm::quat_cast(modelMatrixColliderMartillo4);
+		modelMatrixColliderMartillo4 = glm::scale(modelMatrixColliderMartillo4, glm::vec3(0.1f));
+		modelMatrixColliderMartillo4 = glm::translate(modelMatrixColliderMartillo4, glm::vec3(modelMartillo4.getObb().c.x, modelMartillo4.getObb().c.y, modelMartillo4.getObb().c.z));
+		Martillo4Collider.e = modelMartillo4.getObb().e * glm::vec3(0.1f);
+		Martillo4Collider.c = glm::vec3(modelMatrixColliderMartillo4[3]);
+		addOrUpdateColliders(collidersOBB, "Martillo4", Martillo4Collider, modelMatrixMartillo4);
+
+		AbstractModel::OBB Martillo5Collider;
+		glm::mat4 modelMatrixColliderMartillo5 = glm::mat4(modelMatrixMartillo5);
+		modelMatrixColliderMartillo5 = glm::translate(modelMatrixColliderMartillo5, glm::vec3(0, 10+trasMartillo, -0.2));
+		Martillo5Collider.u = glm::quat_cast(modelMatrixColliderMartillo5);
+		modelMatrixColliderMartillo5 = glm::scale(modelMatrixColliderMartillo5, glm::vec3(0.1f));
+		modelMatrixColliderMartillo5 = glm::translate(modelMatrixColliderMartillo5, glm::vec3(modelMartillo5.getObb().c.x, modelMartillo5.getObb().c.y, modelMartillo5.getObb().c.z));
+		Martillo5Collider.e = modelMartillo5.getObb().e * glm::vec3(0.1f);
+		Martillo5Collider.c = glm::vec3(modelMatrixColliderMartillo5[3]);
+		addOrUpdateColliders(collidersOBB, "Martillo5", Martillo5Collider, modelMatrixMartillo5);
+
+		AbstractModel::OBB Martillo6Collider;
+		glm::mat4 modelMatrixColliderMartillo6 = glm::mat4(modelMatrixMartillo6);
+		modelMatrixColliderMartillo6 = glm::translate(modelMatrixColliderMartillo6, glm::vec3(0, 10+trasMartillo, -0.2));
+		Martillo6Collider.u = glm::quat_cast(modelMatrixColliderMartillo6);
+		modelMatrixColliderMartillo6 = glm::scale(modelMatrixColliderMartillo6, glm::vec3(0.1f));
+		modelMatrixColliderMartillo6 = glm::translate(modelMatrixColliderMartillo6, glm::vec3(modelMartillo6.getObb().c.x, modelMartillo6.getObb().c.y, modelMartillo6.getObb().c.z));
+		Martillo6Collider.e = modelMartillo6.getObb().e * glm::vec3(0.1f);
+		Martillo6Collider.c = glm::vec3(modelMatrixColliderMartillo6[3]);
+		addOrUpdateColliders(collidersOBB, "Martillo6", Martillo6Collider, modelMatrixMartillo6);
+
+		AbstractModel::OBB Martillo7Collider;
+		glm::mat4 modelMatrixColliderMartillo7 = glm::mat4(modelMatrixMartillo7);
+		modelMatrixColliderMartillo7 = glm::translate(modelMatrixColliderMartillo7, glm::vec3(0, 10+trasMartillo, -0.2));
+		Martillo7Collider.u = glm::quat_cast(modelMatrixColliderMartillo7);
+		modelMatrixColliderMartillo7 = glm::scale(modelMatrixColliderMartillo7, glm::vec3(0.1f));
+		modelMatrixColliderMartillo7 = glm::translate(modelMatrixColliderMartillo7, glm::vec3(modelMartillo7.getObb().c.x, modelMartillo7.getObb().c.y, modelMartillo7.getObb().c.z));
+		Martillo7Collider.e = modelMartillo7.getObb().e * glm::vec3(0.1f);
+		Martillo7Collider.c = glm::vec3(modelMatrixColliderMartillo7[3]);
+		addOrUpdateColliders(collidersOBB, "Martillo7", Martillo7Collider, modelMatrixMartillo7);
+
+		AbstractModel::OBB Martillo8Collider;
+		glm::mat4 modelMatrixColliderMartillo8 = glm::mat4(modelMatrixMartillo8);
+		modelMatrixColliderMartillo8 = glm::translate(modelMatrixColliderMartillo8, glm::vec3(0, 10+trasMartillo, -0.2));
+		Martillo8Collider.u = glm::quat_cast(modelMatrixColliderMartillo8);
+		modelMatrixColliderMartillo8 = glm::scale(modelMatrixColliderMartillo8, glm::vec3(0.1f));
+		modelMatrixColliderMartillo8 = glm::translate(modelMatrixColliderMartillo8, glm::vec3(modelMartillo8.getObb().c.x, modelMartillo8.getObb().c.y, modelMartillo8.getObb().c.z));
+		Martillo8Collider.e = modelMartillo8.getObb().e * glm::vec3(0.1f);
+		Martillo8Collider.c = glm::vec3(modelMatrixColliderMartillo8[3]);
+		addOrUpdateColliders(collidersOBB, "Martillo8", Martillo8Collider, modelMatrixMartillo8);
+
+		//AbstractModel::OBB Martillo9Collider;
+		//glm::mat4 modelMatrixColliderMartillo9 = glm::mat4(modelMatrixMartillo9);
+		//modelMatrixColliderMartillo9 = glm::translate(modelMatrixColliderMartillo9, glm::vec3(0, 10, -0.2));
+		//modelMatrixColliderMartillo9 = glm::rotate(modelMatrixColliderMartillo9, glm::radians(-rotMartillo), glm::vec3(1, 0, 0));
+		////modelMatrixColliderMartillo = glm::rotate(modelMatrixColliderMartillo, glm::radians(-180.0f), glm::vec3(1,0,0));
+		//Martillo9Collider.u = glm::quat_cast(modelMatrixColliderMartillo9);
+		//modelMatrixColliderMartillo9 = glm::scale(modelMatrixColliderMartillo9, glm::vec3(0.1f));
+		//modelMatrixColliderMartillo9 = glm::translate(modelMatrixColliderMartillo9, glm::vec3(modelMartillo9.getObb().c.x, modelMartillo9.getObb().c.y, modelMartillo9.getObb().c.z));
+		//Martillo9Collider.e = modelMartillo9.getObb().e * glm::vec3(0.1f);
+		//Martillo9Collider.c = glm::vec3(modelMatrixColliderMartillo9[3]);
+		//addOrUpdateColliders(collidersOBB, "Martillo9", Martillo9Collider, modelMatrixMartillo9);
+
+		//AbstractModel::OBB Martillo10Collider;
+		//glm::mat4 modelMatrixColliderMartillo10 = glm::mat4(modelMatrixMartillo10);
+		//modelMatrixColliderMartillo10 = glm::translate(modelMatrixColliderMartillo10, glm::vec3(0, 10, -0.2));
+		//modelMatrixColliderMartillo10 = glm::rotate(modelMatrixColliderMartillo10, glm::radians(-rotMartillo), glm::vec3(1, 0, 0));
+		////modelMatrixColliderMartillo = glm::rotate(modelMatrixColliderMartillo, glm::radians(-180.0f), glm::vec3(1,0,0));
+		//Martillo10Collider.u = glm::quat_cast(modelMatrixColliderMartillo10);
+		//modelMatrixColliderMartillo10 = glm::scale(modelMatrixColliderMartillo10, glm::vec3(0.1f));
+		//modelMatrixColliderMartillo10 = glm::translate(modelMatrixColliderMartillo10, glm::vec3(modelMartillo10.getObb().c.x, modelMartillo10.getObb().c.y, modelMartillo10.getObb().c.z));
+		//Martillo10Collider.e = modelMartillo10.getObb().e * glm::vec3(0.1f);
+		//Martillo10Collider.c = glm::vec3(modelMatrixColliderMartillo10[3]);
+		//addOrUpdateColliders(collidersOBB, "Martillo10", Martillo10Collider, modelMatrixMartillo10);
+
 
 		//Collider de Finn
 		AbstractModel::OBB FinnCollider;
@@ -1969,7 +2145,20 @@ void applicationLoop() {
 			else
 				martilloRegreso = false;
 		}
-		
+		if (MartillotrasRegreso == false) {
+			if (trasMartillo < 8) {
+				trasMartillo += 0.05f;
+			}
+			else
+				MartillotrasRegreso = true;
+		}
+		if (MartillotrasRegreso == true) {
+			if (trasMartillo > -2) {
+				trasMartillo -= 0.05f;
+			}
+			else
+				MartillotrasRegreso = false;
+		}
 
 		glfwSwapBuffers(window);
 
@@ -2139,6 +2328,60 @@ void renderScene(bool renderParticles){
 	modelMatrixMartillobody = glm::scale(modelMatrixMartillobody, glm::vec3(0.1f));
 	modelMatrixMartillobody = glm::rotate(modelMatrixMartillobody, glm::radians(rotMartillo), glm::vec3(1, 0, 0));
 	modelMartillo.render(modelMatrixMartillobody);
+
+	glm::mat4 modelMatrixMartillo2body = glm::mat4(modelMatrixMartillo2);
+	modelMatrixMartillo2body = glm::translate(modelMatrixMartillo2body, glm::vec3(0, 10, 0));
+	modelMatrixMartillo2body = glm::scale(modelMatrixMartillo2body, glm::vec3(0.1f));
+	modelMatrixMartillo2body = glm::rotate(modelMatrixMartillo2body, glm::radians(-rotMartillo), glm::vec3(1, 0, 0));
+	modelMartillo2.render(modelMatrixMartillo2body);
+	
+	glm::mat4 modelMatrixMartillo3body = glm::mat4(modelMatrixMartillo3);
+	modelMatrixMartillo3body = glm::translate(modelMatrixMartillo3body, glm::vec3(0, 10, 0));
+	modelMatrixMartillo3body = glm::scale(modelMatrixMartillo3body, glm::vec3(0.1f));
+	modelMatrixMartillo3body = glm::rotate(modelMatrixMartillo3body, glm::radians(rotMartillo), glm::vec3(1, 0, 0));
+	modelMartillo3.render(modelMatrixMartillo3body);
+
+	glm::mat4 modelMatrixMartillo4body = glm::mat4(modelMatrixMartillo4);
+	modelMatrixMartillo4body = glm::translate(modelMatrixMartillo4body, glm::vec3(0, 10, 0));
+	modelMatrixMartillo4body = glm::scale(modelMatrixMartillo4body, glm::vec3(0.1f));
+	modelMatrixMartillo4body = glm::rotate(modelMatrixMartillo4body, glm::radians(-rotMartillo), glm::vec3(1, 0, 0));
+	modelMartillo4.render(modelMatrixMartillo4body);
+
+	glm::mat4 modelMatrixMartillo5body = glm::mat4(modelMatrixMartillo5);
+	modelMatrixMartillo5body = glm::translate(modelMatrixMartillo5body, glm::vec3(0, 10+trasMartillo, 0));
+	modelMatrixMartillo5body = glm::scale(modelMatrixMartillo5body, glm::vec3(0.1f));
+	//modelMatrixMartillo5body = glm::rotate(modelMatrixMartillo5body, glm::radians(-rotMartillo), glm::vec3(1, 0, 0));
+	modelMartillo5.render(modelMatrixMartillo5body);
+
+	glm::mat4 modelMatrixMartillo6body = glm::mat4(modelMatrixMartillo6);
+	modelMatrixMartillo6body = glm::translate(modelMatrixMartillo6body, glm::vec3(0, 10+trasMartillo, 0));
+	modelMatrixMartillo6body = glm::scale(modelMatrixMartillo6body, glm::vec3(0.1f));
+	//modelMatrixMartillo6body = glm::rotate(modelMatrixMartillo6body, glm::radians(-rotMartillo), glm::vec3(1, 0, 0));
+	modelMartillo6.render(modelMatrixMartillo6body);
+
+	glm::mat4 modelMatrixMartillo7body = glm::mat4(modelMatrixMartillo7);
+	modelMatrixMartillo7body = glm::translate(modelMatrixMartillo7body, glm::vec3(0, 10+trasMartillo, 0));
+	modelMatrixMartillo7body = glm::scale(modelMatrixMartillo7body, glm::vec3(0.1f));
+	//modelMatrixMartillo7body = glm::rotate(modelMatrixMartillo7body, glm::radians(-rotMartillo), glm::vec3(1, 0, 0));
+	modelMartillo7.render(modelMatrixMartillo7body);
+
+	glm::mat4 modelMatrixMartillo8body = glm::mat4(modelMatrixMartillo8);
+	modelMatrixMartillo8body = glm::translate(modelMatrixMartillo8body, glm::vec3(0, 10+trasMartillo, 0));
+	modelMatrixMartillo8body = glm::scale(modelMatrixMartillo8body, glm::vec3(0.1f));
+	//modelMatrixMartillo8body = glm::rotate(modelMatrixMartillo8body, glm::radians(-rotMartillo), glm::vec3(1, 0, 0));
+	modelMartillo8.render(modelMatrixMartillo8body);
+
+	/*glm::mat4 modelMatrixMartillo9body = glm::mat4(modelMatrixMartillo9);
+	modelMatrixMartillo9body = glm::translate(modelMatrixMartillo9body, glm::vec3(0, 10, 0));
+	modelMatrixMartillo9body = glm::scale(modelMatrixMartillo9body, glm::vec3(0.1f));
+	modelMatrixMartillo9body = glm::rotate(modelMatrixMartillo9body, glm::radians(-rotMartillo), glm::vec3(1, 0, 0));
+	modelMartillo9.render(modelMatrixMartillo9body);
+
+	glm::mat4 modelMatrixMartillo10body = glm::mat4(modelMatrixMartillo10);
+	modelMatrixMartillo10body = glm::translate(modelMatrixMartillo10body, glm::vec3(0, 10, 0));
+	modelMatrixMartillo10body = glm::scale(modelMatrixMartillo10body, glm::vec3(0.1f));
+	modelMatrixMartillo10body = glm::rotate(modelMatrixMartillo10body, glm::radians(-rotMartillo), glm::vec3(1, 0, 0));
+	modelMartillo10.render(modelMatrixMartillo10body);*/
 	glEnable(GL_CULL_FACE);
 
 	/*******************************************
@@ -2146,7 +2389,7 @@ void renderScene(bool renderParticles){
 	 *******************************************/
 	// -------------------------------------------> Render Finn
 	glDisable(GL_CULL_FACE);
-	modelMatrixFinn[3][1] = -GRAVITY * tmv * tmv + 3.5 * tmv + terrain.getHeightTerrain(modelMatrixFinn[3][0], modelMatrixFinn[3][2]);
+	modelMatrixFinn[3][1] = -GRAVITY * tmv * tmv + 6 * tmv /*+ terrain.getHeightTerrain(modelMatrixFinn[3][0], modelMatrixFinn[3][2])*/;
 	tmv = currTime - startTimeJump;
 	if (modelMatrixFinn[3][1] < terrain.getHeightTerrain(modelMatrixFinn[3][0], modelMatrixFinn[3][2])) {
 		isJump = false;
@@ -2157,7 +2400,6 @@ void renderScene(bool renderParticles){
 	finnModelAnimate.setAnimationIndex(animationIndex);
 	finnModelAnimate.render(modelMatrixFinnBody);
 	glEnable(GL_CULL_FACE);
-
 
 	//----------------------------------------> Render de Jacke
 	glDisable(GL_CULL_FACE);
@@ -2194,42 +2436,6 @@ void renderScene(bool renderParticles){
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glDisable(GL_CULL_FACE);
 	for(std::map<float, std::pair<std::string, glm::vec3> >::reverse_iterator it = blendingSorted.rbegin(); it != blendingSorted.rend(); it++){
-	//	if(it->second.first.compare("aircraft") == 0){
-	//		// Render for the aircraft model
-	//		glm::mat4 modelMatrixAircraftBlend = glm::mat4(modelMatrixAircraft);
-	//		modelMatrixAircraftBlend[3][1] = terrain.getHeightTerrain(modelMatrixAircraftBlend[3][0], modelMatrixAircraftBlend[3][2]) + 2.0;
-	//		modelAircraft.render(modelMatrixAircraftBlend);
-	//	}
-	//	else if(it->second.first.compare("lambo") == 0){
-	//		// Lambo car
-	//		glm::mat4 modelMatrixLamboBlend = glm::mat4(modelMatrixLambo);
-	//		modelMatrixLamboBlend[3][1] = terrain.getHeightTerrain(modelMatrixLamboBlend[3][0], modelMatrixLamboBlend[3][2]);
-	//		modelMatrixLamboBlend = glm::scale(modelMatrixLamboBlend, glm::vec3(1.3, 1.3, 1.3));
-	//		modelLambo.render(modelMatrixLamboBlend);
-	//		glActiveTexture(GL_TEXTURE0);
-	//		glm::mat4 modelMatrixLamboLeftDor = glm::mat4(modelMatrixLamboBlend);
-	//		modelMatrixLamboLeftDor = glm::translate(modelMatrixLamboLeftDor, glm::vec3(1.08676, 0.707316, 0.982601));
-	//		modelMatrixLamboLeftDor = glm::rotate(modelMatrixLamboLeftDor, glm::radians(dorRotCount), glm::vec3(1.0, 0, 0));
-	//		modelMatrixLamboLeftDor = glm::translate(modelMatrixLamboLeftDor, glm::vec3(-1.08676, -0.707316, -0.982601));
-	//		modelLamboLeftDor.render(modelMatrixLamboLeftDor);
-	//		modelLamboRightDor.render(modelMatrixLamboBlend);
-	//		modelLamboFrontLeftWheel.render(modelMatrixLamboBlend);
-	//		modelLamboFrontRightWheel.render(modelMatrixLamboBlend);
-	//		modelLamboRearLeftWheel.render(modelMatrixLamboBlend);
-	//		modelLamboRearRightWheel.render(modelMatrixLamboBlend);
-	//		// Se regresa el cull faces IMPORTANTE para las puertas
-		//}
-		//else if(it->second.first.compare("heli") == 0){
-		//	// Helicopter
-		//	glm::mat4 modelMatrixHeliChasis = glm::mat4(modelMatrixHeli);
-		//	modelHeliChasis.render(modelMatrixHeliChasis);
-
-		//	glm::mat4 modelMatrixHeliHeli = glm::mat4(modelMatrixHeliChasis);
-		//	modelMatrixHeliHeli = glm::translate(modelMatrixHeliHeli, glm::vec3(0.0, 0.0, -0.249548));
-		//	modelMatrixHeliHeli = glm::rotate(modelMatrixHeliHeli, rotHelHelY, glm::vec3(0, 1, 0));
-		//	modelMatrixHeliHeli = glm::translate(modelMatrixHeliHeli, glm::vec3(0.0, 0.0, 0.249548));
-		//	modelHeliHeli.render(modelMatrixHeliHeli);
-		//}
 		 if(renderParticles && it->second.first.compare("fountain") == 0){
 			/**********
 			 * Init Render particles systems
