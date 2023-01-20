@@ -111,6 +111,7 @@ Model modelMartillo;
 // Mayow
 //Model mayowModelAnimate;
 Model finnModelAnimate; // -------------------------> Se crea el objeto Model de Finn
+Model jackeModelAnimate;
 // Terrain model instance
 //Terrain terrain(-1, -1, 200, 16, "../Textures/heightmap.png");
 
@@ -156,6 +157,7 @@ int lastMousePosY, offsetY = 0;
 glm::mat4 modelMatrixFountain = glm::mat4(1.0f);
 glm::mat4 modelMatrixMartillo = glm::mat4(1.0f);
 glm::mat4 modelMatrixFinn = glm::mat4(1.0f); // ------------------------------> Matrix para Finn
+glm::mat4 modelMatrixJacke = glm::mat4(1.0f);
 
 float rotMartillo;
 bool martilloRegreso;
@@ -541,6 +543,10 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	//Finn
 	finnModelAnimate.loadModel("../models/Finn/Finn_Normal.fbx"); //--------------------> Se carga el modelo (archivo de animaciones)
 	finnModelAnimate.setShader(&shaderMulLighting); // ----------------------> Se cargan los shaders
+
+	//Jacke
+	jackeModelAnimate.loadModel("../models/jack/JackeSaludar.fbx");
+	jackeModelAnimate.setShader(&shaderMulLighting);
 
 	camera->setPosition(glm::vec3(0.0, 0.0, 10.0));
 	camera->setDistanceFromTarget(distanceFromTarget);
@@ -1106,6 +1112,8 @@ void destroy() {
 	
 	finnModelAnimate.destroy(); // -------------------------------> Se destruye el modelo de Finn
 
+	jackeModelAnimate.destroy(); //----------------> Se destruye el modelo de Jacke
+
 	// Textures Delete
 	glBindTexture(GL_TEXTURE_2D, 0);
 	glDeleteTextures(1, &textureCespedID);
@@ -1444,6 +1452,9 @@ void applicationLoop() {
 	// -----------------------------------------> Posición que estará Finn al ejecutar el programa
 	modelMatrixFinn = glm::translate(modelMatrixFinn, glm::vec3(3.0f, 0.05f, -10.0f));
 	modelMatrixFinn = glm::rotate(modelMatrixFinn, glm::radians(90.0f), glm::vec3(0, 1, 0));
+
+	modelMatrixJacke = glm::translate(modelMatrixJacke, glm::vec3(1.0f, 0.05f, -5.0f));
+	modelMatrixJacke = glm::rotate(modelMatrixJacke, glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f));
 
 
 	lastTime = TimeManager::Instance().GetTime();
@@ -2026,6 +2037,8 @@ void prepareScene(){
 
 	//Finn
 	finnModelAnimate.setShader(&shaderMulLighting); // -------------------> setShader para Finn
+
+	jackeModelAnimate.setShader(&shaderMulLighting); // --------------> setShader para Jacke
 }
 
 void prepareDepthScene(){
@@ -2043,6 +2056,8 @@ void prepareDepthScene(){
 	modelGrass.setShader(&shaderDepth);
 	//FINN
 	finnModelAnimate.setShader(&shaderDepth); // ------------------> setShader para Finn
+
+	jackeModelAnimate.setShader(&shaderDepth); // -------------------> setShader para Jacke
 }
 
 void renderScene(bool renderParticles){
@@ -2140,6 +2155,16 @@ void renderScene(bool renderParticles){
 	finnModelAnimate.setAnimationIndex(animationIndex);
 	finnModelAnimate.render(modelMatrixFinnBody);
 	glEnable(GL_CULL_FACE);
+
+
+	//----------------------------------------> Render de Jacke
+	glDisable(GL_CULL_FACE);
+	glm::mat4 modelMatrixJackeBody = glm::mat4(modelMatrixJacke);
+	modelMatrixJackeBody = glm::scale(modelMatrixJackeBody, glm::vec3(0.002f, 0.002f, 0.002f));
+	jackeModelAnimate.setAnimationIndex(animationIndex);
+	jackeModelAnimate.render(modelMatrixJackeBody);
+	glEnable(GL_CULL_FACE);
+
 	/**********
 	 * Update the position with alpha objects
 	 */
