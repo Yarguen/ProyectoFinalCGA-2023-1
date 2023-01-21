@@ -1542,7 +1542,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	textureHighway.freeImage(bitmap);
 
 	// Definiendo la textura a utilizar
-	Texture textureLandingPad("../Textures/landingPad.jpg");
+	Texture textureLandingPad("../Textures/start.jpg");
 	// Carga el mapa de bits (FIBITMAP es el tipo de dato de la libreria)
 	bitmap = textureLandingPad.loadImage();
 	// Convertimos el mapa de bits en un arreglo unidimensional de tipo unsigned char
@@ -1864,7 +1864,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	alGenBuffers(NUM_BUFFERS, buffer);
 	buffer[0] = alutCreateBufferFromFile("../sounds/fountain.wav");
 	buffer[1] = alutCreateBufferFromFile("../sounds/fire.wav");
-	buffer[2] = alutCreateBufferFromFile("../sounds/darth_vader.wav");
+	buffer[2] = alutCreateBufferFromFile("../sounds/musicaJuego.wav");
 	int errorAlut = alutGetError();
 	if (errorAlut != ALUT_ERROR_NO_ERROR){
 		printf("- Error open files with alut %d !!\n", errorAlut);
@@ -1899,7 +1899,7 @@ void init(int width, int height, std::string strTitle, bool bFullScreen) {
 	alSourcef(source[1], AL_MAX_DISTANCE, 2000);
 
 	alSourcef(source[2], AL_PITCH, 1.0f);
-	alSourcef(source[2], AL_GAIN, 0.3f);
+	alSourcef(source[2], AL_GAIN, 0.2f);
 	alSourcefv(source[2], AL_POSITION, source2Pos);
 	alSourcefv(source[2], AL_VELOCITY, source2Vel);
 	alSourcei(source[2], AL_BUFFER, buffer[2]);
@@ -2143,8 +2143,8 @@ bool processInput(bool continueApplication) {
 	if (!iniciaPartida) {
 		bool statusEnter = glfwGetKey(window, GLFW_KEY_ENTER) == GLFW_PRESS;
 		bool statusStart = botones[7] == GLFW_PRESS; // ----------------------------> BOTON START
-		if ((texturaActivaID == textureCespedID && statusEnter) ||
-			(texturaActivaID == textureCespedID && statusStart)) {
+		if ((texturaActivaID == textureLandingPadID && statusEnter) ||
+			(texturaActivaID == textureLandingPadID && statusStart)) {
 			iniciaPartida = true;
 		}
 		if ((!presionarOpcion && glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS )||(!presionarOpcion && botones[11]==GLFW_PRESS)) {
@@ -2153,6 +2153,12 @@ bool processInput(bool continueApplication) {
 				texturaActivaID = textureWallID;
 			}
 			else if (texturaActivaID == textureWallID) {
+				texturaActivaID = textureControlesID;
+			}
+			else if (texturaActivaID == textureControlesID) {
+				texturaActivaID = textureLandingPadID;
+			}
+			else if (texturaActivaID == textureLandingPadID) {
 				texturaActivaID = textureCespedID;
 			}
 		}
@@ -2179,17 +2185,17 @@ bool processInput(bool continueApplication) {
 		enableCountSelected = true;
 
 	// Dart Lego model movements
-	if (modelSelected == 2 && glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS){
+	if (modelSelected == 2 && (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)){
 		modelMatrixFinn = glm::rotate(modelMatrixFinn, glm::radians(1.0f), glm::vec3(0, 1, 0));
 		animationIndex = 0;
-	}else if (modelSelected == 2 && glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS){
+	}else if (modelSelected == 2 && (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)){
 		modelMatrixFinn = glm::rotate(modelMatrixFinn, glm::radians(-1.0f), glm::vec3(0, 1, 0));
 		animationIndex = 0;
-	}else if (modelSelected == 2 && glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS){
-		modelMatrixFinn = glm::translate(modelMatrixFinn, glm::vec3(0, 0, 0.05));
+	}else if (modelSelected == 2 && (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)){
+		modelMatrixFinn = glm::translate(modelMatrixFinn, glm::vec3(0, 0, 0.075));
 		animationIndex = 0;
-	}else if (modelSelected == 2 && glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS){
-		modelMatrixFinn = glm::translate(modelMatrixFinn, glm::vec3(0, 0, -0.05));
+	}else if (modelSelected == 2 && (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)){
+		modelMatrixFinn = glm::translate(modelMatrixFinn, glm::vec3(0, 0, -0.075));
 		animationIndex = 0;
 	}
 	else {
@@ -3049,6 +3055,11 @@ void applicationLoop() {
 		source0Pos[1] = modelMatrixFountain[3].y;
 		source0Pos[2] = modelMatrixFountain[3].z;
 		alSourcefv(source[0], AL_POSITION, source0Pos);
+
+		source2Pos[0] = modelMatrixFinn[3].x;
+		source2Pos[1] = modelMatrixFinn[3].y;
+		source2Pos[2] = modelMatrixFinn[3].z;
+		alSourcefv(source[2], AL_POSITION, source2Pos);
 
 
 		// Listener for the Thris person camera
