@@ -2884,7 +2884,7 @@ void applicationLoop() {
 		/*******************************************
 		 * Render de colliders
 		 *******************************************/
-		for (std::map<std::string, std::tuple<AbstractModel::OBB, glm::mat4, glm::mat4> >::iterator it =
+		/*for (std::map<std::string, std::tuple<AbstractModel::OBB, glm::mat4, glm::mat4> >::iterator it =
 				collidersOBB.begin(); it != collidersOBB.end(); it++) {
 			glm::mat4 matrixCollider = glm::mat4(1.0);
 			matrixCollider = glm::translate(matrixCollider, std::get<0>(it->second).c);
@@ -2903,7 +2903,7 @@ void applicationLoop() {
 			sphereCollider.setColor(glm::vec4(1.0, 1.0, 1.0, 1.0));
 			sphereCollider.enableWireMode();
 			sphereCollider.render(matrixCollider);
-		}
+		}*/
 
 		// Esto es para ilustrar la transformacion inversa de los coliders
 		/*glm::vec3 cinv = glm::inverse(mayowCollider.u) * glm::vec4(rockCollider.c, 1.0);
